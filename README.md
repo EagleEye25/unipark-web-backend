@@ -9,5 +9,6 @@ backend to access database for unipark
 
 # Running the app
 1) Ensure your console (git) is pointing towards the project folder
-2) Type "node app" to start the development server
-3) Point postman to running address
+2) In command line type "npm install" to install dependancies (first time running / after installed other dependancies)
+3) Type "node app" to start the development server
+4) Point postman to running address
