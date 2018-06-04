@@ -16,6 +16,7 @@ exports.get = function(req, resp) {
     if (patt.test(req.url)) {
       patt = new RegExp(regex);
       var personelID = patt.exec(req.url);
+      personelID = "'"+personelID+"'";
       personel.getUserInfo(req, resp, personelID)
     } else {
       httpMsgs.show404(req, resp);
@@ -61,7 +62,7 @@ exports.update = function(req, resp) {
       }
     });
     req.on("end", function() {
-      personel.getUserInfo(req, resp, reqbody);
+      personel.updateUserInfo(req, resp, reqbody);
     });
   } else {
     httpMsgs.show404(req, resp);

@@ -29,28 +29,27 @@ exports.updateUserInfo = function(req, resp, reqBody) {
     var data = JSON.parse(reqBody);
     if (data) {
 
-      if(data.personelID) throw new Error("Personnel number not provided!");
+      if(!data.personelID) throw new Error("Personnel number not provided!");
 
-      var sql = "UPDATE Personel SET"
-
+      var sql = "UPDATE Personel SET ";
       var isDataProvided = false;
       if(data.PersonelPhoneNumber) {
-        sql += "PersonelPhoneNumber = " + data.PersonelPhoneNumber + ",";
+        sql += " PersonelPhoneNumber = '" + data.PersonelPhoneNumber + "',";
         isDataProvided = true;
       }
 
       if(data.PersonelEmail) {
-        sql += "PersonelPhoneNumber = " + data.PersonelPhoneNumber + ",";
+        sql += " PersonelEmail = '" + data.PersonelEmail + "',";
         isDataProvided = true;
       }
 
       if(data.PersonelPassword) {
-        sql += "PersonelPhoneNumber = " + data.PersonelPhoneNumber + ",";
+        sql += " PersonelPassword = '" + data.PersonelPassword + "',";
         isDataProvided = true;
       }
 
       sql = sql.slice(0, -1);
-      sql += " WHERE PersonelID = " + data.personelID;
+      sql += " WHERE PersonelID = '" + data.personelID + "'";
 
       db.executeSql(sql, function(data, err) {
         if (err) {
