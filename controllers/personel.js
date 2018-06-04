@@ -23,6 +23,16 @@ exports.getUserInfo = function(req, resp, personelID) {
   });
 };
 
+exports.getLoginInfo = function(req, resp, personelID) {
+  db.executeSql("SELECT PersonelID, PersonelPassword FROM Personel WHERE PersonelID =" + personelID, function(data, err) {
+    if (err) {
+      httpMsgs.show500(req, resp, err);
+    } else {
+      httpMsgs.sendJson(req, resp, data);
+    }
+  });
+};
+
 exports.updateUserInfo = function(req, resp, reqBody) {
   try {
     if (!reqBody) throw new Error("Input not valid");
