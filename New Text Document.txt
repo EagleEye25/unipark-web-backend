@@ -1,0 +1,20 @@
+USE [master]
+GO
+CREATE LOGIN [dev1] WITH PASSWORD=N'MyPass' MUST_CHANGE, 
+DEFAULT_DATABASE=[master], CHECK_EXPIRATION=ON, CHECK_POLICY=ON
+GO
+
+
+
+USE [AdventureWorks]
+GO
+CREATE USER [dev1] FOR LOGIN [dev1]
+GO
+
+
+
+CREATE ROLE db_executer
+GRANT EXECUTE to db_executer
+EXEC sp_addrolemember N'db_executer', N'<username>'
+
+ctrl + shift + R
