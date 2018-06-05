@@ -3,7 +3,7 @@ var httpMsgs = require("../core/httpMsgs");
 var util = require("util");
 
 exports.getPersonel = function(req, resp) {
-  db.executeSql("SELECT * FROM Personnel", function(data, err) {
+  db.executeSql("uspDisplayPersonelInfoAll", function(data, err) {
     if (err) {
       httpMsgs.show500(req, resp, err)
     } else {
@@ -14,7 +14,7 @@ exports.getPersonel = function(req, resp) {
 };
 
 exports.getUserInfo = function(req, resp, personelID) {
-  db.executeSql("SELECT * FROM Personnel WHERE PersonnelID =" + personelID, function(data, err) {
+  db.executeSql("uspDisplayPersonelInfo" + personelID, function(data, err) {
     if (err) {
       httpMsgs.show500(req, resp, err);
     } else {
@@ -24,7 +24,7 @@ exports.getUserInfo = function(req, resp, personelID) {
 };
 
 exports.getLoginInfo = function(req, resp, personelID) {
-  db.executeSql("SELECT PersonnelID, PersonnelPassword FROM Personnel WHERE PersonnelID =" + personelID, function(data, err) {
+  db.executeSql("uspLogin" + personelID, function(data, err) {
     if (err) {
       httpMsgs.show500(req, resp, err);
     } else {

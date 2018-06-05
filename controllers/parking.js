@@ -2,7 +2,7 @@ var db = require("../core/db");
 var httpMsgs = require("../core/httpMsgs")
 
 exports.getAssignedParking = function(req, resp, parkingID) {
-  db.executeSql("SELECT  FROM  WHERE =" + parkingID, function(data, err) {
+  db.executeSql("" + parkingID, function(data, err) {
     if (err) {
       httpMsgs.show500(req, resp, err)
     } else {
