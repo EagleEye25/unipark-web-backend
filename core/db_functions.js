@@ -5,14 +5,18 @@ var httpMsgs = require("../core/httpMsgs");
 var personel = require("../controllers/personel");
 
 exports.getPersonelInfo = function(req, resp) {
+  var regex = "[a-z][0-9]+";
+  var pattSpecified = new RegExp("/personnel/specified/" + regex);
+  var pattLogin = new RegExp("/personnel/login/" + regex);
+  
   if (req.url === "/") {
     httpMsgs.showHome(req, resp);
   }
   else if (req.url === "/personnel") {
     personel.getPersonel(req, resp);
-  } else {
+  } else if (pattSpecified.test(req.url)) {
     var regex = "[a-z][0-9]+";
-    var patt = new RegExp("/personnel/" + regex);
+    var patt = new RegExp("/personnel/specified/" + regex);
     if (patt.test(req.url)) {
       patt = new RegExp(regex);
       var personelID = patt.exec(req.url);
@@ -21,44 +25,7 @@ exports.getPersonelInfo = function(req, resp) {
     } else {
       httpMsgs.show404(req, resp);
     }
-  }
-  /*
-  switch (req.url) {
-    case "/":
-      httpMsgs.showHome(req, resp);
-      break;
-    case "/personnel/all":
-      personel.getPersonel(req, resp);
-      break;
-    case "/specified/": // Dont know what the input variable will be 
-      var regex = "[a-z][0-9]+";
-      var patt = new RegExp("/specified/" + regex);
-      if (patt.test(req.url)) {
-        patt = new RegExp(regex);
-        var personelID = patt.exec(req.url);
-        personelID = "'"+personelID+"'";
-        personel.getUserInfo(req, resp, personelID)
-      } else {
-        httpMsgs.show404(req, resp);
-      }
-      break;
-    case "/personnel/login" : // Dont know what the input variable will be 
-      var regex = "[a-z][0-9]+";
-      var patt = new RegExp("/personnel/login/" + regex);
-      if (patt.test(req.url)) {
-        patt = new RegExp(regex);
-        var personelID = patt.exec(req.url);
-        personelID = "'"+personelID+"'";
-        personel.getLoginInfo(req, resp, personelID)
-      } else {
-        httpMsgs.show404(req, resp);
-      }
-      break;
-  }*/    
-};
-
-exports.getPersonelLogin = function (req, resP) {
-  if (req.url === "/personnel/login") {
+  } else if (pattLogin.test(req.url)) {
     var regex = "[a-z][0-9]+";
     var patt = new RegExp("/personnel/login/" + regex);
     if (patt.test(req.url)) {

@@ -3,7 +3,7 @@ var httpMsgs = require("../core/httpMsgs");
 var util = require("util");
 
 exports.getPersonel = function(req, resp) {
-  db.executeSql("SELECT * FROM Personel", function(data, err) {
+  db.executeSql("SELECT * FROM Personnel", function(data, err) {
     if (err) {
       httpMsgs.show500(req, resp, err)
     } else {
@@ -14,7 +14,7 @@ exports.getPersonel = function(req, resp) {
 };
 
 exports.getUserInfo = function(req, resp, personelID) {
-  db.executeSql("SELECT * FROM Personel WHERE PersonelID =" + personelID, function(data, err) {
+  db.executeSql("SELECT * FROM Personnel WHERE PersonnelID =" + personelID, function(data, err) {
     if (err) {
       httpMsgs.show500(req, resp, err);
     } else {
@@ -24,7 +24,7 @@ exports.getUserInfo = function(req, resp, personelID) {
 };
 
 exports.getLoginInfo = function(req, resp, personelID) {
-  db.executeSql("SELECT PersonelID, PersonelPassword FROM Personel WHERE PersonelID =" + personelID, function(data, err) {
+  db.executeSql("SELECT PersonnelID, PersonnelPassword FROM Personnel WHERE PersonnelID =" + personelID, function(data, err) {
     if (err) {
       httpMsgs.show500(req, resp, err);
     } else {
@@ -41,25 +41,25 @@ exports.updateUserInfo = function(req, resp, reqBody) {
 
       if(!data.personelID) throw new Error("Personnel number not provided!");
 
-      var sql = "UPDATE Personel SET ";
+      var sql = "UPDATE Personnel SET ";
       var isDataProvided = false;
       if(data.PersonelPhoneNumber) {
-        sql += " PersonelPhoneNumber = '" + data.PersonelPhoneNumber + "',";
+        sql += " PersonnelPhoneNumber = '" + data.PersonelPhoneNumber + "',";
         isDataProvided = true;
       }
 
       if(data.PersonelEmail) {
-        sql += " PersonelEmail = '" + data.PersonelEmail + "',";
+        sql += " PersonnelEmail = '" + data.PersonelEmail + "',";
         isDataProvided = true;
       }
 
       if(data.PersonelPassword) {
-        sql += " PersonelPassword = '" + data.PersonelPassword + "',";
+        sql += " PersonnelPassword = '" + data.PersonelPassword + "',";
         isDataProvided = true;
       }
 
       sql = sql.slice(0, -1);
-      sql += " WHERE PersonelID = '" + data.personelID + "'";
+      sql += " WHERE PersonnelID = '" + data.personelID + "'";
 
       db.executeSql(sql, function(data, err) {
         if (err) {
