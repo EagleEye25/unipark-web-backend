@@ -26,7 +26,7 @@ exports.show500 = function(req, resp, err) {
 
 exports.send200 = function(req, resp) {
   resp.writeHead(200, { "Content-Type": "application/json" });
-  resp.write(JSON.stringify({data: " SUCCESS "}))
+  resp.write(JSON.stringify({data: " SUCCESS "}));
   resp.end();
 }
 
@@ -40,10 +40,15 @@ exports.sendJson = function(req, resp, data) {
 
 exports.showHome = function(req, resp) {
   resp.writeHead(200, { "Content-Type": "application/json" });
-  resp.write(JSON.stringify([{url: "/personnel", operation: "GET", description: "Gets list of all personnel"},
-  {url: "/personnel/specified/'personnelID'", operation: "GET", description: "Gets all personnel info"},
-  {url: "/personnel/login/'personnelID'", operation: "GET", description: "Gets personnel login info"},
-  {url: "/parking/assigned-parking/'personnelID'", operation: "GET", description: "Gets parking assigned to user"}
+  resp.write(JSON.stringify([
+  // personnel
+  {url: "/personnel", operation: "GET", description: "Gets list of all personnel."},
+  {url: "/personnel/specified/'personnelID'", operation: "GET", description: "Gets all personnel info."},
+  {url: "/personnel/login/'personnelID'", operation: "GET", description: "Gets personnel login info."},
+  {url: "/personnel/update/", operation: "PUT", description: "Updates the user information.",
+    info: "Please ensure that you use the operation PUT to push data that is entered."},
+  // parking
+  {url: "/parking/assigned-parking/'personnelID'", operation: "GET", description: "Gets parking assigned to user."}
   ]));
   resp.end();
 };
