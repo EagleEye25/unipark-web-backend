@@ -36,6 +36,21 @@ exports.getLoginInfo = function(req, resp, personelID) {
   });
 };
 
+/* possible implimentation for update stored procedure
+exports.update = function(req, resp, reqBody) {
+  if (!reqBody) throw new Error("Input not valid");
+    var data = JSON.parse(reqBody);
+  
+  db.executeSql("uspChangeDetailsWeb" + data.PersonnelEmail + data.PersonnelPhoneNumber + data.PersonnelPassword + data.PersonnelID ,function(data, err) {
+    if (err) {
+      httpMsgs.show500(req, resp, err);
+    } else {
+      httpMsgs.sendJson(req, resp, data);
+    }
+  });
+};
+*/
+
 // updates user info
 exports.updateUserInfo = function(req, resp, reqBody) {
   try {
@@ -43,27 +58,27 @@ exports.updateUserInfo = function(req, resp, reqBody) {
     var data = JSON.parse(reqBody);
     if (data) {
 
-      if(!data.personelID) throw new Error("Personnel number not provided!");
+      if(!data.PersonnelID) throw new Error("Personnel number not provided!");
 
       var sql = "UPDATE Personnel SET ";
       var isDataProvided = false;
-      if(data.PersonelPhoneNumber) {
-        sql += " PersonnelPhoneNumber = '" + data.PersonelPhoneNumber + "',";
+      if(data.PersonnelPhoneNumber) {
+        sql += " PersonnelPhoneNumber = '" + data.PersonnelPhoneNumber + "',";
         isDataProvided = true;
       }
 
-      if(data.PersonelEmail) {
-        sql += " PersonnelEmail = '" + data.PersonelEmail + "',";
+      if(data.PersonnelEmail) {
+        sql += " PersonnelEmail = '" + data.PersonnelEmail + "',";
         isDataProvided = true;
       }
 
-      if(data.PersonelPassword) {
-        sql += " PersonnelPassword = '" + data.PersonelPassword + "',";
+      if(data.PersonnelPassword) {
+        sql += " PersonnelPassword = '" + data.PersonnelPassword + "',";
         isDataProvided = true;
       }
 
       sql = sql.slice(0, -1);
-      sql += " WHERE PersonnelID = '" + data.personelID + "'";
+      sql += " WHERE PersonnelID = '" + data.PersonnelID + "'";
 
       db.executeSql(sql, function(data, err) {
         if (err) {
