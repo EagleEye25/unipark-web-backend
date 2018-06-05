@@ -9,7 +9,7 @@ http.createServer(function(req, resp) {
   switch (req.method) {
     // GET
     case "GET":
-      db_func.get(req, resp);
+      db_func.getPersonelInfo(req, resp);
       break;
     // INSERT
     case "POST":

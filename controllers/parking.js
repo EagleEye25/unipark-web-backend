@@ -1,8 +1,8 @@
 var db = require("../core/db");
 var httpMsgs = require("../core/httpMsgs")
 
-exports.getAssignedParking = function(req, resp, personelNum) {
-  db.executeSql("SELECT * FROM Personel", function(data, err) {
+exports.getAssignedParking = function(req, resp, parkingID) {
+  db.executeSql("" + parkingID, function(data, err) {
     if (err) {
       httpMsgs.show500(req, resp, err)
     } else {
@@ -18,7 +18,7 @@ exports.requestParking = function(req, resp, reqBody) {
     var data = JSON.parse(reqBody);
     if (data) {
       var sql = "INSERT INTO  () VALUES ";
-      sql+= util.format("(%d, '%s', %d, %d)", data.empNo, data.empName, data.salary, data.deptno);
+      sql+= util.format("(%d, '%s', %d, %d)", data.ParkingArea, data.ParkingSpot);
 
       db.executeSql(sql, function(data, err) {
         if (err) {

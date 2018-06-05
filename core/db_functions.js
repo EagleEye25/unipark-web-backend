@@ -4,34 +4,39 @@ var settings = require("../settings")
 var httpMsgs = require("../core/httpMsgs");
 var personel = require("../controllers/personel");
 
-exports.get = function(req, resp) {
+exports.getPersonelInfo = function(req, resp) {
+  var regex = "[a-z][0-9]+";
+  var pattSpecified = new RegExp("/personnel/specified/" + regex);
+  var pattLogin = new RegExp("/personnel/login/" + regex);
+  
   if (req.url === "/") {
     httpMsgs.showHome(req, resp);
   }
   else if (req.url === "/personnel") {
     personel.getPersonel(req, resp);
-  } else {
+  } else if (pattSpecified.test(req.url)) {
     var regex = "[a-z][0-9]+";
-    var patt = new RegExp("/personnel/" + regex);
+    var patt = new RegExp("/personnel/specified/" + regex);
     if (patt.test(req.url)) {
       patt = new RegExp(regex);
       var personelID = patt.exec(req.url);
+      personelID = "'"+personelID+"'";
       personel.getUserInfo(req, resp, personelID)
     } else {
       httpMsgs.show404(req, resp);
     }
-  }
-
-  /*var empnoPatt = "[0-9]+";
-    var patt = new RegExp("/personnel/" + empnoPatt);
+  } else if (pattLogin.test(req.url)) {
+    var regex = "[a-z][0-9]+";
+    var patt = new RegExp("/personnel/login/" + regex);
     if (patt.test(req.url)) {
-      patt = new RegExp(empnoPatt);
-      var empno = patt.exec(req.url);
-      emp.getWithParam(req, resp, empno)
+      patt = new RegExp(regex);
+      var personelID = patt.exec(req.url);
+      personelID = "'"+personelID+"'";
+      personel.getLoginInfo(req, resp, personelID)
     } else {
       httpMsgs.show404(req, resp);
-    }*/
-    
+    }
+  }
 };
 
 exports.insert = function(req, resp) {
@@ -52,7 +57,7 @@ exports.insert = function(req, resp) {
 };
 
 exports.update = function(req, resp) {
-  if (req.url === "/personnel") {
+  if (req.url === "/personnel/update") {
     var reqbody = '';
     req.on("data", function(data) {
       reqbody += data;
@@ -61,7 +66,7 @@ exports.update = function(req, resp) {
       }
     });
     req.on("end", function() {
-      personel.getUserInfo(req, resp, reqbody);
+      personel.updateUserInfo(req, resp, reqbody);
     });
   } else {
     httpMsgs.show404(req, resp);
