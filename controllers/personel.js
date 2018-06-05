@@ -2,6 +2,7 @@ var db = require("../core/db");
 var httpMsgs = require("../core/httpMsgs");
 var util = require("util");
 
+// gets all personnel info
 exports.getPersonel = function(req, resp) {
   db.executeSql("uspDisplayPersonelInfoAll", function(data, err) {
     if (err) {
@@ -13,6 +14,7 @@ exports.getPersonel = function(req, resp) {
   });
 };
 
+// gets specified personnel info
 exports.getUserInfo = function(req, resp, personelID) {
   db.executeSql("uspDisplayPersonelInfo" + personelID, function(data, err) {
     if (err) {
@@ -23,6 +25,7 @@ exports.getUserInfo = function(req, resp, personelID) {
   });
 };
 
+// gets personnerl login info
 exports.getLoginInfo = function(req, resp, personelID) {
   db.executeSql("uspLogin" + personelID, function(data, err) {
     if (err) {
@@ -33,6 +36,7 @@ exports.getLoginInfo = function(req, resp, personelID) {
   });
 };
 
+// updates user info
 exports.updateUserInfo = function(req, resp, reqBody) {
   try {
     if (!reqBody) throw new Error("Input not valid");

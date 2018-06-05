@@ -4,11 +4,14 @@ var settings = require("../settings")
 var httpMsgs = require("../core/httpMsgs");
 var personel = require("../controllers/personel");
 
+// Gets info associated to personnel, info supplied
 exports.getPersonelInfo = function(req, resp) {
+  // regexp to specifiy urls
   var regex = "[a-z][0-9]+";
   var pattSpecified = new RegExp("/personnel/specified/" + regex);
   var pattLogin = new RegExp("/personnel/login/" + regex);
   
+  // runs through all possibilities of urls
   if (req.url === "/") {
     httpMsgs.showHome(req, resp);
   }
