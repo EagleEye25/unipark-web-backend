@@ -4,36 +4,48 @@ var util = require("util");
 
 // gets all personnel info
 exports.getPersonel = function(req, resp) {
-  db.executeSql("uspDisplayPersonelInfoAll", function(data, err) {
-    if (err) {
-      httpMsgs.show500(req, resp, err)
-    } else {
-      httpMsgs.sendJson(req, resp, data);
-    }
-    resp.end();
-  });
+  try {
+    db.executeSql("uspDisplayPersonelInfoAll", function(data, err) {
+      if (err) {
+        httpMsgs.show500(req, resp, err)
+      } else {
+        httpMsgs.sendJson(req, resp, data);
+      }
+      resp.end();
+    });
+  } catch (ex) {
+    httpMsgs.show500(req, resp, ex);
+  }
 };
 
 // gets specified personnel info
 exports.getUserInfo = function(req, resp, personelID) {
-  db.executeSql("uspDisplayPersonelInfo" + personelID, function(data, err) {
-    if (err) {
-      httpMsgs.show500(req, resp, err);
-    } else {
-      httpMsgs.sendJson(req, resp, data);
-    }
-  });
+  try {
+    db.executeSql("uspDisplayPersonelInfo" + personelID, function(data, err) {
+      if (err) {
+        httpMsgs.show500(req, resp, err);
+      } else {
+        httpMsgs.sendJson(req, resp, data);
+      }
+    });
+  } catch (ex) {
+    httpMsgs.show500(req, resp, ex);
+  }
 };
 
 // gets personnerl login info
 exports.getLoginInfo = function(req, resp, personelID) {
-  db.executeSql("uspLogin" + personelID, function(data, err) {
-    if (err) {
-      httpMsgs.show500(req, resp, err);
-    } else {
-      httpMsgs.sendJson(req, resp, data);
-    }
-  });
+  try {
+    db.executeSql("uspLogin" + personelID, function(data, err) {
+      if (err) {
+        httpMsgs.show500(req, resp, err);
+      } else {
+        httpMsgs.sendJson(req, resp, data);
+      }
+    });
+  } catch (ex) {
+    httpMsgs.show500(req, resp, ex);
+  }
 };
 
 /* possible implimentation for update stored procedure

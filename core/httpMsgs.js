@@ -48,7 +48,9 @@ exports.showHome = function(req, resp) {
   {url: "/personnel/update/", operation: "PUT", description: "Updates the user information.",
     info: "Please ensure that you use the operation PUT to push data that is entered."},
   // parking
-  {url: "/parking/assigned-parking/'personnelID'", operation: "GET", description: "Gets parking assigned to user."}
+  {url: "/parking/assigned-parking/'personnelID'", operation: "GET", description: "Gets parking assigned to user."},
+  {url: "/request-parking-info", operation: "GET", description: "Gets user requests in request parking."},
+  {url: "/request-parking", operation: "POST", description: "Request for parking within facility."}
   ]));
   resp.end();
 };
