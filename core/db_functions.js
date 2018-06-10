@@ -56,8 +56,12 @@ exports.getUrlInfo = function(req, resp) {
   }
 };
 
+exports.getRequestParking = function(req, resp) {  
+    parking.getParkingRequests(req, resp);
+};
+
 exports.insert = function(req, resp) {
-  if (req.url === "/personnel") {
+  if (req.url === "/request-parking") {
     var reqbody = '';
     req.on("data", function(data) {
       reqbody += data;
@@ -66,7 +70,7 @@ exports.insert = function(req, resp) {
       }
     });
     req.on("end", function() {
-      emp.add(req, resp, reqbody);
+      parking.requestParking(req, resp, reqbody);
     });
   } else {
     httpMsgs.show404(req, resp);

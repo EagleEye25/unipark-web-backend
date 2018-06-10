@@ -10,6 +10,9 @@ http.createServer(function(req, resp) {
     // GET
     case "GET":
       db_func.getUrlInfo(req, resp);
+      if (req.url === "/request-parking-info") {
+        db_func.getRequestParking(req, resp);
+      }
       break;
     // INSERT
     case "POST":
