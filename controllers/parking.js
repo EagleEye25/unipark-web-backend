@@ -59,10 +59,10 @@ exports.requestParking = function(req, resp, reqBody) {
     if (!reqBody) throw new Error("Input not valid");
     var data = JSON.parse(reqBody);
     if (data) {
-      var sql = "INSERT INTO INSERT INTO ParkingRequest(PersonnelID,ParkingSpaceID,ParkingRequestTime,Status) VALUES ";
-      sql+= util.format("('%s', '%s', '%s', %d)", data.PersonnelID, data.ParkingSpaceID, date, 1);
+      var sql = "INSERT INTO ParkingRequest(PersonnelID,ParkingSpaceID,ParkingRequestTime,Status) VALUES ";
+      sql+= util.format("('%s', %d, '%s', %d)", data.PersonnelID, data.ParkingSpaceID, new Date().toISOString(), true);
 
-      console.log(date);
+      console.log(date, sql);
 
       db.executeSql(sql, function(data, err) {
         if (err) {
