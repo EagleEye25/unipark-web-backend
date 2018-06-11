@@ -13,6 +13,8 @@ exports.getUrlInfo = function(req, resp) {
   var pattLogin = new RegExp("/personnel/login/" + regex);
 
   var pattParkingSpec = new RegExp("/assigned-parking/" + regex);
+
+  var personelID;
   
   // runs through all possibilities of urls
   if (req.url === "/") {
@@ -21,33 +23,27 @@ exports.getUrlInfo = function(req, resp) {
   else if (req.url === "/personnel") {
     personel.getPersonel(req, resp);
   } else if (pattSpecified.test(req.url)) {
-    var regex = "[a-z][0-9]+";
-    var patt = new RegExp("/personnel/specified/" + regex);
-    if (patt.test(req.url)) {
+    if (pattSpecified.test(req.url)) {
       patt = new RegExp(regex);
-      var personelID = patt.exec(req.url);
+      personelID = patt.exec(req.url);
       personelID = "'"+personelID+"'";
       personel.getUserInfo(req, resp, personelID)
     } else {
       httpMsgs.show404(req, resp);
     }
   } else if (pattLogin.test(req.url)) {
-    var regex = "[a-z][0-9]+";
-    var patt = new RegExp("/personnel/login/" + regex);
-    if (patt.test(req.url)) {
+    if (pattLogin.test(req.url)) {
       patt = new RegExp(regex);
-      var personelID = patt.exec(req.url);
+      personelID = patt.exec(req.url);
       personelID = "'"+personelID+"'";
       personel.getLoginInfo(req, resp, personelID)
     } else {
       httpMsgs.show404(req, resp);
     }
   } else if (pattParkingSpec.test(req.url)) {
-    var regex = "[a-z][0-9]+";
-    var patt = new RegExp("/assigned-parking/" + regex);
-    if (patt.test(req.url)) {
+    if (pattParkingSpec.test(req.url)) {
       patt = new RegExp(regex);
-      var personelID = patt.exec(req.url);
+      personelID = patt.exec(req.url);
       personelID = "'"+personelID+"'";
       parking.getAssignedParking(req, resp, personelID)
     } else {
@@ -56,8 +52,19 @@ exports.getUrlInfo = function(req, resp) {
   }
 };
 
-exports.getRequestParking = function(req, resp) {  
+exports.getParkingInfo = function(req, resp) { 
+  var regex = "[a-z][0-9]+";
+  var pattParkingInfo = new RegExp("/parking-info/" + regex);
+  if (req.url === "/request-parking-info") {
     parking.getParkingRequests(req, resp);
+  } else if (pattParkingInfo.test(req.url)) {
+    patt = new RegExp(regex);
+    personelID = patt.exec(req.url);
+    personelID = "'"+personelID+"'";
+    parking.getparkingRequestInfo(req, resp, personelID)
+  } else {
+    httpMsgs.show404(req, resp);
+  }
 };
 
 exports.insert = function(req, resp) {

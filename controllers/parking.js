@@ -33,6 +33,21 @@ exports.getParkingRequests = function(req, resp) {
   }
 };
 
+exports.getparkingRequestInfo = function(req, resp, PersonelID) {
+  try {
+    db.executeSql("" + PersonelID, function(data, err) {
+      if (err) {
+        httpMsgs.show500(req, resp, err);
+      } else {
+        httpMsgs.sendJson(req, resp, data);
+      }
+    });
+
+  } catch (ex) {
+    httpMsgs.show500(req, resp, ex);
+  }
+};
+
 exports.requestParking = function(req, resp, reqBody) {
   var date;
   date = getDateTime();
@@ -80,8 +95,6 @@ exports.test = function(req, resp, reqBody) {
     httpMsgs.show500(req, resp, ex);
   }
 };
-
-
 
 getDateTime = function() {
 
