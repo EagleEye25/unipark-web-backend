@@ -25,7 +25,7 @@ exports.getUserInfo = function(req, resp, personelID) {
       if (err) {
         httpMsgs.show500(req, resp, err);
       } else {
-        httpMsgs.sendJson(req, resp, data);
+        httpMsgs.sendJson(req, resp, data[0]);
       }
     });
   } catch (ex) {
@@ -36,7 +36,7 @@ exports.getUserInfo = function(req, resp, personelID) {
 // gets personnerl login info
 exports.getLoginInfo = function(req, resp, personelID) {
   try {
-    db.executeSql("uspLogin" + personelID, function(data, err) {
+    db.executeSql("uspLogin" + `'${personelID}'`, function(data, err) {
       if (err) {
         httpMsgs.show500(req, resp, err);
       } else {
@@ -45,6 +45,17 @@ exports.getLoginInfo = function(req, resp, personelID) {
     });
   } catch (ex) {
     httpMsgs.show500(req, resp, ex);
+  }
+};
+
+// gets personnerl login info
+exports.fetchLoginInfo = function(personelID, callback) {
+  try {
+    db.executeSql("uspLogin" + `'${personelID}'`, function(data, err) {
+      callback(data, err);
+    });
+  } catch (ex) {
+    callback(data, err);
   }
 };
 
