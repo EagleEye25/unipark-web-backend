@@ -3,9 +3,10 @@ var httpMsgs = require("../core/httpMsgs");
 var util = require("util");
 var sql = require('mssql');
 
-exports.getAssignedParking = function(req, resp, parkingID) {
+// gets parking assigned to user
+exports.getAssignedParking = function(req, resp, PersonelID) {
   try {
-    db.executeSql("uspSpecificAssigned" + parkingID, function(data, err) {
+    db.executeSql("uspSpecificAssigned" + PersonelID, function(data, err) {
       if (err) {
         httpMsgs.show500(req, resp, err)
       } else {
@@ -18,6 +19,7 @@ exports.getAssignedParking = function(req, resp, parkingID) {
   }
 };
 
+// gets all parking requsts
 exports.getParkingRequests = function(req, resp) {
   try {
     db.executeSql("SELECT * FROM ParkingRequest", function(data, err) {
@@ -33,7 +35,8 @@ exports.getParkingRequests = function(req, resp) {
   }
 };
 
-exports.getparkingRequestInfo = function(req, resp, PersonelID) {
+// gets all parking requests from database
+exports.getparkingRequestInfoSpecified = function(req, resp, PersonelID) {
   try {
     db.executeSql("" + PersonelID, function(data, err) {
       if (err) {
@@ -48,6 +51,7 @@ exports.getparkingRequestInfo = function(req, resp, PersonelID) {
   }
 };
 
+// adds data for requesting of parking space
 exports.requestParking = function(req, resp, reqBody) {
   var date;
   date = getDateTime();
@@ -73,6 +77,7 @@ exports.requestParking = function(req, resp, reqBody) {
   }
 };
 
+// test of insert (request parking)
 exports.test = function(req, resp, reqBody) {
   var date;
   date = getDateTime();
@@ -96,6 +101,7 @@ exports.test = function(req, resp, reqBody) {
   }
 };
 
+// gets current system date and time
 getDateTime = function() {
 
   var date = new Date();

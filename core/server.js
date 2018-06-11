@@ -6,12 +6,14 @@ var personel = require("../controllers/personel");
 var db_func = require("./db_functions");
 
 http.createServer(function(req, resp) {
+  var regex = "[/a-z]";
+  pattParking = new RegExp("/parking/" + regex);
   switch (req.method) {
     // GET
     case "GET":
-      db_func.getUrlInfo(req, resp);
-      if (req.url === "/request-parking-info") {
-        db_func.getRequestParking(req, resp);
+      db_func.doGetRequest(req, resp);
+      if (pattParking.test(req.url)) {
+        db_func.getRequestParkingInfo(req, resp);
       }
       break;
     // INSERT
@@ -21,6 +23,10 @@ http.createServer(function(req, resp) {
     // UPDATE
     case "PUT":
       db_func.update(req, resp);
+      break;
+    // OPTIONS
+    case "OPTIONS":
+      httpMsgs.sendOptions(req, resp);
       break;
   }
 }).listen(settings.webPort, function() {

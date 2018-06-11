@@ -1,7 +1,7 @@
 var settings = require("../settings");
 
 exports.show404 = function(req, resp) {
-  resp.writeHead(405, "Resource Not Found", { "Content-Type": "application/json" });
+  resp.writeHead(404, "Resource Not Found", { "Content-Type": "application/json" });
   resp.write(JSON.stringify({data: " Resource Not Found"}));
   resp.end();
 };
@@ -19,19 +19,40 @@ exports.show413 = function(req, resp) {
 };
 
 exports.show500 = function(req, resp, err) {
-  resp.writeHead(500, "Internal Error Occurred", { "Content-Type": "application/json" });
+  resp.writeHead(500, "Internal Error Occurred", {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*" });
   resp.write(JSON.stringify({data: " Error OCCURRED: " + err}));
   resp.end();
 };
 
 exports.send200 = function(req, resp) {
-  resp.writeHead(200, { "Content-Type": "application/json" });
+  resp.writeHead(200, {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*"
+  });
   resp.write(JSON.stringify({data: " SUCCESS "}));
   resp.end();
 }
 
 exports.sendJson = function(req, resp, data) {
-  resp.writeHead(200, { "Content-Type": "application/json" });
+  resp.writeHead(200, {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*"
+  });
+  if(data) {
+    resp.write(JSON.stringify(data));
+  }
+  resp.end();
+}
+
+exports.sendOptions = function(req, resp, data) {
+  resp.writeHead(200, {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, GET, PUT, OPTIONS",
+    "Access-Control-Allow-Headers": "origin, x-csrftoken, content-type, accept"
+  });
   if(data) {
     resp.write(JSON.stringify(data));
   }
@@ -48,9 +69,9 @@ exports.showHome = function(req, resp) {
   {url: "/personnel/update", operation: "PUT", description: "Updates the user information.",
     info: "Please ensure that you use the operation PUT to push data that is entered."},
   // parking
-  {url: "/parking-info/'personnelID'", operation: "GET", description: "Gets list of parking areas, spaces user is vaild to request."},
-  {url: "/parking/assigned-parking/'personnelID'", operation: "GET", description: "Gets parking assigned to user."},
-  {url: "/request-parking-info", operation: "GET", description: "Gets user requests in request parking."},
+  {url: "/parking/request/info/'personnelID'", operation: "GET", description: "Gets list of parking areas, spaces user is vaild to request."},
+  {url: "/parking/assigned/'personnelID'", operation: "GET", description: "Gets parking assigned to user."},
+  {url: "/parking/requests", operation: "GET", description: "Gets user requests in request parking."},
   {url: "/request-parking", operation: "POST", description: "Request for parking within facility."}
   ]));
   resp.end();
