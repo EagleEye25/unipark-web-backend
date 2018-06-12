@@ -34,21 +34,6 @@ exports.getUserInfo = function(req, resp, personelID) {
 };
 
 // gets personnerl login info
-exports.getLoginInfo = function(req, resp, personelID) {
-  try {
-    db.executeSql("uspLogin" + `'${personelID}'`, function(data, err) {
-      if (err) {
-        httpMsgs.show500(req, resp, err);
-      } else {
-        httpMsgs.sendJson(req, resp, data);
-      }
-    });
-  } catch (ex) {
-    httpMsgs.show500(req, resp, ex);
-  }
-};
-
-// gets personnerl login info
 exports.fetchLoginInfo = function(personelID, callback) {
   try {
     db.executeSql("uspLogin" + `'${personelID}'`, function(data, err) {

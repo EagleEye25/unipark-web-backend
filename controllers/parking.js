@@ -10,7 +10,7 @@ exports.getAssignedParking = function(req, resp, PersonelID) {
       if (err) {
         httpMsgs.show500(req, resp, err)
       } else {
-        httpMsgs.sendJson(req, resp, data);
+        httpMsgs.sendJson(req, resp, data[0]);
       }
       resp.end();
     });
@@ -42,7 +42,7 @@ exports.getparkingRequestInfoSpecified = function(req, resp, PersonelID) {
       if (err) {
         httpMsgs.show500(req, resp, err);
       } else {
-        httpMsgs.sendJson(req, resp, data);
+        httpMsgs.sendJson(req, resp, data[0]);
       }
     });
 
