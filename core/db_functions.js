@@ -138,8 +138,12 @@ getParkingSpecified = function(req, resp) {
 
 // gets parking requests from specifed user
 getParkingRequestsSpecified = function(req, resp) {
-  patt = new RegExp(regex);
-  personelID = patt.exec(req.url);
-  personelID = "'"+personelID+"'";
-  parking.getparkingRequestInfoSpecified(req, resp, personelID);
+  if (pattParkingInfoRequest.test(req.url)) {
+    patt = new RegExp(regex);
+    personelID = patt.exec(req.url);
+    personelID = "'"+personelID+"'";
+    parking.getParkingRequestInfoSpecified(req, resp, personelID);
+  } else {
+    httpMsgs.show404(req, resp);
+  }
 };

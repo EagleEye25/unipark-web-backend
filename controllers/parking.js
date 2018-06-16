@@ -28,24 +28,24 @@ exports.getParkingRequests = function(req, resp) {
       } else {
         httpMsgs.sendJson(req, resp, data);
       }
+      resp.end();
     });
-
   } catch (ex) {
     httpMsgs.show500(req, resp, ex);
   }
 };
 
 // gets all parking requests from database
-exports.getparkingRequestInfoSpecified = function(req, resp, PersonelID) {
+exports.getParkingRequestInfoSpecified = function(req, resp, PersonelID) {
   try {
-    db.executeSql("" + PersonelID, function(data, err) {
+    db.executeSql("uspGetPakingForPersonel" + PersonelID, function(data, err) {
       if (err) {
         httpMsgs.show500(req, resp, err);
       } else {
-        httpMsgs.sendJson(req, resp, data[0]);
+        httpMsgs.sendJson(req, resp, data);
       }
+      resp.end();
     });
-
   } catch (ex) {
     httpMsgs.show500(req, resp, ex);
   }
