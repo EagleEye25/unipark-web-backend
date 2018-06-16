@@ -65,7 +65,7 @@ exports.showHome = function(req, resp) {
   // personnel
   {url: "/personnel", operation: "GET", description: "Gets list of all personnel."},
   {url: "/personnel/specified/'personnelID'", operation: "GET", description: "Gets all personnel info."},
-  {url: "/personnel/login/'personnelID'", operation: "GET", description: "Gets personnel login info."},
+  {url: "/personnel/login/'personnelID'", operation: "POST", description: "'signs in' user from info entered."},
   {url: "/personnel/update", operation: "PUT", description: "Updates the user information.",
     info: "Please ensure that you use the operation PUT to push data that is entered."},
   // parking
