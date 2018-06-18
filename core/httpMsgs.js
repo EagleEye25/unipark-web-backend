@@ -72,7 +72,8 @@ exports.showHome = function(req, resp) {
   {url: "/parking/request/info/'personnelID'", operation: "GET", description: "Gets list of parking areas, spaces user is vaild to request."},
   {url: "/parking/assigned/'personnelID'", operation: "GET", description: "Gets parking assigned to user."},
   {url: "/parking/requests", operation: "GET", description: "Gets user requests in request parking."},
-  {url: "/request-parking", operation: "POST", description: "Request for parking within facility."}
+  {url: "/request-parking", operation: "POST", description: "Request for parking within facility."},
+  {url: "/infringements/'personnelID'", operation: "GET", description: "Gets all entered user infringements."}
   ]));
   resp.end();
 };

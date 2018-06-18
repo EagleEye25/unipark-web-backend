@@ -4,6 +4,7 @@ var settings = require("../settings")
 var httpMsgs = require("../core/httpMsgs");
 var personel = require("../controllers/personel");
 var parking = require("../controllers/parking");
+var infringements = require('../controllers/ingringements');
 
 // regexp to specifiy urls
 var regex = "[a-z][0-9]+";
@@ -12,6 +13,7 @@ var pattLogin = "/personnel/login";
 
 var pattParkingSpec = new RegExp("/parking/assigned/" + regex);
 var pattParkingInfoRequest = new RegExp("/parking/request/info/" + regex);
+var pattIngringements = new RegExp("/infringements/" + regex);
 var personelID;
 
 // Gets info associated to personnel, info supplied
@@ -25,17 +27,9 @@ exports.doGetRequest = function(req, resp) {
     personel.getPersonel(req, resp);
   } else if (pattSpecified.test(req.url)) {
     getPersonelSpecified(req, resp);
-  }
-};
-// Post info associated to personnel, info supplied
-exports.doPostRequest = function(req, resp) {  
-  // runs through all possibilities of urls for personnel
-  console.info(req.url);
-};
-
-// runs through url possiblities for parking 
-exports.getRequestParkingInfo = function(req, resp) { 
-  if (req.url === "/parking/requests") {
+  } else if (pattIngringements.test(req.url)) {
+    getUserInfringements(req, resp);
+  } else if (req.url === "/parking/requests") {
     parking.getParkingRequests(req, resp);
   } else if (pattParkingInfoRequest.test(req.url)) {
     getParkingRequestsSpecified(req, resp);
@@ -44,6 +38,11 @@ exports.getRequestParkingInfo = function(req, resp) {
   } else {
     httpMsgs.show404(req, resp);
   }
+};
+// Post info associated to personnel, info supplied
+exports.doPostRequest = function(req, resp) {  
+  // runs through all possibilities of urls for personnel
+  console.info(req.url);
 };
 
 // inserts data to database
@@ -88,7 +87,7 @@ exports.update = function(req, resp) {
 
 // FUNCTIONS TO PERFORM ACTIONS
 // PERSONNEL FUNCTIONS
-// gets personnel login info
+// gets personnel login info, tests front end data
 authenticatePersonel = function(req, resp, reqbody) {
   try {
     reqdata = reqbody ? JSON.parse(reqbody) : null;
@@ -143,6 +142,18 @@ getParkingRequestsSpecified = function(req, resp) {
     personelID = patt.exec(req.url);
     personelID = "'"+personelID+"'";
     parking.getParkingRequestInfoSpecified(req, resp, personelID);
+  } else {
+    httpMsgs.show404(req, resp);
+  }
+};
+
+// gets user infringements
+getUserInfringements = function(req, resp) {
+  if (pattIngringements.test(req.url)) {
+    patt = new RegExp(regex);
+    personelID = patt.exec(req.url);
+    personelID = "'"+personelID+"'";
+    infringements.getUserIngringements(req, resp, personelID)
   } else {
     httpMsgs.show404(req, resp);
   }
