@@ -35,10 +35,27 @@ exports.getParkingRequests = function(req, resp) {
   }
 };
 
+
 // gets all parking requests from database
 exports.getParkingRequestInfoSpecified = function(req, resp, PersonelID) {
   try {
     db.executeSql("uspGetPakingForPersonel" + PersonelID, function(data, err) {
+      if (err) {
+        httpMsgs.show500(req, resp, err);
+      } else {
+        httpMsgs.sendJson(req, resp, data);
+      }
+      resp.end();
+    });
+  } catch (ex) {
+    httpMsgs.show500(req, resp, ex);
+  }
+};
+
+// gets parking areas 
+exports.getParkingAreasSpecified = function(req, resp, PersonelID) {
+  try {
+    db.executeSql("uspGetPakingAreaForPersonnel" + PersonelID, function(data, err) {
       if (err) {
         httpMsgs.show500(req, resp, err);
       } else {
