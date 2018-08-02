@@ -12,9 +12,6 @@ http.createServer(function(req, resp) {
     // GET
     case "GET":
       db_func.doGetRequest(req, resp);
-      /*if (pattParking.test(req.url)) {
-        db_func.getRequestParkingInfo(req, resp);
-      }*/
       break;
     // INSERT
     case "POST":

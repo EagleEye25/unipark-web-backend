@@ -16,9 +16,9 @@ var pattParkingInfoRequest = new RegExp("/parking/request/info/" + regex);
 var pattIngringements = new RegExp("/infringements/" + regex);
 var personelID;
 
-// Gets info associated to personnel, info supplied
+// Does request for url sent
 exports.doGetRequest = function(req, resp) {  
-  // runs through all possibilities of urls for personnel
+  // runs through all possibilities of urls (Get requests)
   console.info(req.url)
   if (req.url === "/") {
     httpMsgs.showHome(req, resp);
@@ -39,11 +39,14 @@ exports.doGetRequest = function(req, resp) {
     httpMsgs.show404(req, resp);
   }
 };
+
+/*
 // Post info associated to personnel, info supplied
 exports.doPostRequest = function(req, resp) {  
   // runs through all possibilities of urls for personnel
   console.info(req.url);
 };
+*/
 
 // inserts data to database
 exports.insert = function(req, resp) {
@@ -67,7 +70,7 @@ exports.insert = function(req, resp) {
   }
 };
 
-//updates data to database
+// Updates data to database
 exports.update = function(req, resp) {
   if (req.url === "/personnel/update") {
     var reqbody = '';
@@ -85,8 +88,6 @@ exports.update = function(req, resp) {
   }
 };
 
-// FUNCTIONS TO PERFORM ACTIONS
-// PERSONNEL FUNCTIONS
 // gets personnel login info, tests front end data
 authenticatePersonel = function(req, resp, reqbody) {
   try {
@@ -109,6 +110,7 @@ authenticatePersonel = function(req, resp, reqbody) {
     httpMsgs.show500(req, resp, ex);
   }
 };
+// FUNCTIONS TO PERFORM ACTIONS
 
 // gets specified personnel info
 getPersonelSpecified = function(req, resp) {

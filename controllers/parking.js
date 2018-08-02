@@ -52,6 +52,7 @@ exports.getParkingRequestInfoSpecified = function(req, resp, PersonelID) {
   }
 };
 
+/*
 // gets parking areas 
 exports.getParkingAreasSpecified = function(req, resp, PersonelID) {
   try {
@@ -67,6 +68,7 @@ exports.getParkingAreasSpecified = function(req, resp, PersonelID) {
     httpMsgs.show500(req, resp, ex);
   }
 };
+*/
 
 // adds data for requesting of parking space
 exports.requestParking = function(req, resp, reqBody) {

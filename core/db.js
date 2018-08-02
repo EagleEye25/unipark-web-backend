@@ -2,6 +2,7 @@
 var settings = require("../settings");
 
 // function to be used on other methods to interact with the database
+// Connects to database
 exports.executeSql = function (sql, callback) {
   var conn = new sqlDB.ConnectionPool(settings.dbConfig);
 
