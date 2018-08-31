@@ -19,6 +19,22 @@ exports.getAssignedParking = function(req, resp, PersonelID) {
   }
 };
 
+// gets parking assigned to user
+exports.getRequestSpecified = function(req, resp, PersonelID) {
+  try {
+    db.executeSql("uspGetRequest" + PersonelID, function(data, err) {
+      if (err) {
+        httpMsgs.show500(req, resp, err)
+      } else {
+        httpMsgs.sendJson(req, resp, data);
+      }
+      resp.end();
+    });
+  } catch (ex) {
+    httpMsgs.show500(req, resp, ex);
+  }
+};
+
 // gets all parking requsts
 exports.getParkingRequests = function(req, resp) {
   try {

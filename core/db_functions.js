@@ -14,6 +14,7 @@ var pattLogin = "/personnel/login";
 var pattParkingSpec = new RegExp("/parking/assigned/" + regex);
 var pattParkingInfoRequest = new RegExp("/parking/request/info/" + regex);
 var pattIngringements = new RegExp("/infringements/" + regex);
+var pattRequestsSpecified = new RegExp("/personnel/requests/" + regex);
 var personelID;
 
 // Does request for url sent
@@ -34,7 +35,9 @@ exports.doGetRequest = function(req, resp) {
   } else if (pattParkingInfoRequest.test(req.url)) {
     getParkingRequestsSpecified(req, resp);
   } else if (pattParkingSpec.test(req.url)) {
-    getParkingSpecified(req, resp)
+    getParkingSpecified(req, resp);
+  } else if (pattRequestsSpecified.test(req.url)) {
+    getPersonnelRequests(req, resp);
   } else {
     httpMsgs.show404(req, resp);
   }
@@ -118,7 +121,7 @@ getPersonelSpecified = function(req, resp) {
     patt = new RegExp(regex);
     personelID = patt.exec(req.url);
     personelID = "'"+personelID+"'";
-    personel.getUserInfo(req, resp, personelID)
+    personel.getUserInfo(req, resp, personelID);
   } else {
     httpMsgs.show404(req, resp);
   }
@@ -131,7 +134,7 @@ getParkingSpecified = function(req, resp) {
     patt = new RegExp(regex);
     personelID = patt.exec(req.url);
     personelID = "'"+personelID+"'";
-    parking.getAssignedParking(req, resp, personelID)
+    parking.getAssignedParking(req, resp, personelID);
   } else {
     httpMsgs.show404(req, resp);
   }
@@ -155,7 +158,19 @@ getUserInfringements = function(req, resp) {
     patt = new RegExp(regex);
     personelID = patt.exec(req.url);
     personelID = "'"+personelID+"'";
-    infringements.getUserIngringements(req, resp, personelID)
+    infringements.getUserIngringements(req, resp, personelID);
+  } else {
+    httpMsgs.show404(req, resp);
+  }
+};
+
+// gets user requests
+getPersonnelRequests = function(req, resp) {
+  if (pattRequestsSpecified.test(req.url)) {
+    patt = new RegExp(regex);
+    personelID = patt.exec(req.url);
+    personelID = "'"+personelID+"'";
+    parking.getRequestSpecified(req, resp, personelID);
   } else {
     httpMsgs.show404(req, resp);
   }
