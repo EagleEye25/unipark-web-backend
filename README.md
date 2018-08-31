@@ -13,3 +13,4 @@ backend to access database for unipark
 2) In command line type "npm install" to install dependancies (first time running / after installed other dependancies)
 3) Type "node app" to start the development server
 4) Point postman to running address
+Test
