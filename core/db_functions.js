@@ -15,6 +15,7 @@ var pattParkingSpec = new RegExp("/parking/assigned/" + regex);
 var pattParkingInfoRequest = new RegExp("/parking/request/info/" + regex);
 var pattIngringements = new RegExp("/infringements/" + regex);
 var pattRequestsSpecified = new RegExp("/personnel/requests/" + regex);
+var pattCancelReq = new RegExp("/request/cancel" + regex);
 var personelID;
 
 // Does request for url sent
@@ -38,6 +39,8 @@ exports.doGetRequest = function(req, resp) {
     getParkingSpecified(req, resp);
   } else if (pattRequestsSpecified.test(req.url)) {
     getPersonnelRequests(req, resp);
+  } else if (pattCancelReq.test(req.url)) {
+    cancelRequest(req, resp);
   } else {
     httpMsgs.show404(req, resp);
   }
@@ -135,6 +138,18 @@ getParkingSpecified = function(req, resp) {
     personelID = patt.exec(req.url);
     personelID = "'"+personelID+"'";
     parking.getAssignedParking(req, resp, personelID);
+  } else {
+    httpMsgs.show404(req, resp);
+  }
+};
+
+// gets specified personnel info
+cancelRequest = function(req, resp) {
+  if (pattCancelReq.test(req.url)) {
+    patt = new RegExp(regex);
+    personelID = patt.exec(req.url);
+    personelID = "'"+personelID+"'";
+    parking.cancelRequest(req, resp, personelID);
   } else {
     httpMsgs.show404(req, resp);
   }

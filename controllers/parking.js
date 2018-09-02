@@ -51,11 +51,26 @@ exports.getParkingRequests = function(req, resp) {
   }
 };
 
-
 // gets all parking requests from database
 exports.getParkingRequestInfoSpecified = function(req, resp, PersonelID) {
   try {
     db.executeSql("uspGetParkingForPersonel" + PersonelID, function(data, err) {
+      if (err) {
+        httpMsgs.show500(req, resp, err);
+      } else {
+        httpMsgs.sendJson(req, resp, data);
+      }
+      resp.end();
+    });
+  } catch (ex) {
+    httpMsgs.show500(req, resp, ex);
+  }
+};
+
+// gets all parking requests from database
+exports.cancelRequest = function(req, resp, PersonelID) {
+  try {
+    db.executeSql("uspCancelRequest" + PersonelID, function(data, err) {
       if (err) {
         httpMsgs.show500(req, resp, err);
       } else {
