@@ -6,8 +6,6 @@ var personel = require("../controllers/personel");
 var db_func = require("./db_functions");
 
 http.createServer(function(req, resp) {
-  var regex = "[/a-z]";
-  pattParking = new RegExp("/parking/" + regex);
   switch (req.method) {
     // GET
     case "GET":

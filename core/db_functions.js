@@ -8,6 +8,7 @@ var infringements = require('../controllers/ingringements');
 
 // regexp to specifiy urls
 var regex = "[a-z][0-9]+";
+var regexCancel = "[R][0-9]+";
 var pattSpecified = new RegExp("/personnel/specified/" + regex);
 var pattLogin = "/personnel/login";
 
@@ -15,8 +16,9 @@ var pattParkingSpec = new RegExp("/parking/assigned/" + regex);
 var pattParkingInfoRequest = new RegExp("/parking/request/info/" + regex);
 var pattIngringements = new RegExp("/infringements/" + regex);
 var pattRequestsSpecified = new RegExp("/personnel/requests/" + regex);
-var pattCancelReq = new RegExp("/request/cancel" + regex);
+var pattCancelReq = new RegExp("/request/cancel/" + regexCancel);
 var personelID;
+var reqID;
 
 // Does request for url sent
 exports.doGetRequest = function(req, resp) {  
@@ -143,15 +145,16 @@ getParkingSpecified = function(req, resp) {
   }
 };
 
-// gets specified personnel info
+// Cancels user request
 cancelRequest = function(req, resp) {
   if (pattCancelReq.test(req.url)) {
-    patt = new RegExp(regex);
-    personelID = patt.exec(req.url);
-    personelID = "'"+personelID+"'";
-    parking.cancelRequest(req, resp, personelID);
+    patt = new RegExp(regexCancel);
+    reqID = patt.exec(req.url);
+    reqID = "'"+reqID+"'";
+    reqID = reqID.substr(1);
+    parking.cancelRequest(req, resp, reqID);
   } else {
-    httpMsgs.show404(req, resp);
+    httpMsgs.show404(req, resp,);
   }
 };
 

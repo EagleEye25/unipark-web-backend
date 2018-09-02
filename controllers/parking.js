@@ -68,13 +68,13 @@ exports.getParkingRequestInfoSpecified = function(req, resp, PersonelID) {
 };
 
 // gets all parking requests from database
-exports.cancelRequest = function(req, resp, PersonelID) {
+exports.cancelRequest = function(req, resp, reqID) {
   try {
-    db.executeSql("uspCancelRequest" + PersonelID, function(data, err) {
+    db.executeSql("uspCancelRequest" + reqID, function(data, err) {
       if (err) {
         httpMsgs.show500(req, resp, err);
       } else {
-        httpMsgs.sendJson(req, resp, data);
+        httpMsgs.send200(req, resp);
       }
       resp.end();
     });
