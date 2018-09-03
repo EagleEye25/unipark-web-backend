@@ -44,6 +44,21 @@ exports.fetchLoginInfo = function(personelID, callback) {
   }
 };
 
+// gets user accociated to license plate
+exports.getUserByLPlate = function(req, resp, lPlate) {
+  try {
+    db.executeSql("uspDisplayPersonelInfo" + date + lPlate, function(data, err) {
+      if (err) {
+        httpMsgs.show500(req, resp, err);
+      } else {
+        httpMsgs.sendJson(req, resp, data[0]);
+      }
+    });
+  } catch (ex) {
+    httpMsgs.show500(req, resp, ex);
+  }
+};
+
 /* possible implimentation for update stored procedure
 exports.update = function(req, resp, reqBody) {
   if (!reqBody) throw new Error("Input not valid");

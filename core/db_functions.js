@@ -9,6 +9,7 @@ var infringements = require('../controllers/ingringements');
 // regexp to specifiy urls
 var regex = "[a-z][0-9]+";
 var regexCancel = "[0-9]+";
+var regexLPlate = "[?][a-z A-Z 0-9]+";
 var pattSpecified = new RegExp("/personnel/specified/" + regex);
 var pattLogin = "/personnel/login";
 
@@ -17,6 +18,7 @@ var pattParkingInfoRequest = new RegExp("/parking/request/info/" + regex);
 var pattIngringements = new RegExp("/infringements/" + regex);
 var pattRequestsSpecified = new RegExp("/personnel/requests/" + regex);
 var pattCancelReq = new RegExp("/request/cancel/" + regexCancel);
+var pattUserByLPlate = new RegExp("/personnelByPlate/" + regexLPlate);
 var personelID;
 var reqID;
 
@@ -43,6 +45,8 @@ exports.doGetRequest = function(req, resp) {
     getPersonnelRequests(req, resp);
   } else if (pattCancelReq.test(req.url)) {
     cancelRequest(req, resp);
+  } else if (pattUserByLPlate.test(req.url)) {
+    getUserByLPlate(req, resp);
   } else {
     httpMsgs.show404(req, resp);
   }
@@ -127,6 +131,20 @@ getPersonelSpecified = function(req, resp) {
     personelID = patt.exec(req.url);
     personelID = "'"+personelID+"'";
     personel.getUserInfo(req, resp, personelID);
+  } else {
+    httpMsgs.show404(req, resp);
+  }
+};
+
+// gets specified personnel info
+getUserByLPlate = function(req, resp) {
+  if (pattUserByLPlate.test(req.url)) {
+    patt = new RegExp(regexLPlate);
+    lPlate = patt.exec(req.url);
+    lPlate = "'"+lPlate+"'";
+    lPlate = lPlate.substr(1);
+    console.log("LPLATE: " + lPlate);
+    personel.getUserByLPlate(req, resp, lPlate);
   } else {
     httpMsgs.show404(req, resp);
   }
