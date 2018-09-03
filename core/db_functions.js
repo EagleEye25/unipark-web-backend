@@ -19,6 +19,8 @@ var pattIngringements = new RegExp("/infringements/" + regex);
 var pattRequestsSpecified = new RegExp("/personnel/requests/" + regex);
 var pattCancelReq = new RegExp("/request/cancel/" + regexCancel);
 var pattUserByLPlate = new RegExp("/personnelByPlate/" + regexLPlate);
+var pattRequest = new RegExp("/request-parking");
+var pattReport = new RegExp("/report")
 var personelID;
 var reqID;
 
@@ -62,7 +64,7 @@ exports.doPostRequest = function(req, resp) {
 
 // inserts data to database
 exports.insert = function(req, resp) {
-  if ([pattLogin, "/request-parking"].includes(req.url)) {
+  if ([pattLogin, "/request-parking", "/report"].includes(req.url)) {
     var reqbody = '';
     req.on("data", function(data) {
       reqbody += data;
@@ -73,8 +75,10 @@ exports.insert = function(req, resp) {
     req.on("end", function() {
       if (pattLogin === req.url) {
         authenticatePersonel(req, resp, reqbody)
-      } else {
+      } else if ("/request-parking" === req.url) {
         parking.requestParking(req, resp, reqbody);
+      } else if ("/report" === req.url) {
+        infringements.reportUser(req, resp, reqbody);
       }
     });
   } else {
