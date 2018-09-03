@@ -8,7 +8,7 @@ var infringements = require('../controllers/ingringements');
 
 // regexp to specifiy urls
 var regex = "[a-z][0-9]+";
-var regexCancel = "[R][0-9]+";
+var regexCancel = "[0-9]+";
 var pattSpecified = new RegExp("/personnel/specified/" + regex);
 var pattLogin = "/personnel/login";
 
@@ -151,7 +151,6 @@ cancelRequest = function(req, resp) {
     patt = new RegExp(regexCancel);
     reqID = patt.exec(req.url);
     reqID = "'"+reqID+"'";
-    reqID = reqID.substr(1);
     parking.cancelRequest(req, resp, reqID);
   } else {
     httpMsgs.show404(req, resp,);
