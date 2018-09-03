@@ -70,16 +70,17 @@ exports.updateUserInfo = function(req, resp, reqBody) {
 
       var sql = "UPDATE Personnel SET ";
       var isDataProvided = false;
+      // CELL NO
       if(data.PersonnelPhoneNumber) {
         sql += " PersonnelPhoneNumber = '" + data.PersonnelPhoneNumber + "',";
         isDataProvided = true;
       }
-
+      // EMAIL
       if(data.PersonnelEmail) {
         sql += " PersonnelEmail = '" + data.PersonnelEmail + "',";
         isDataProvided = true;
       }
-
+      // PASSWORD
       if(data.PersonnelPassword) {
         sql += " PersonnelPassword = '" + data.PersonnelPassword + "',";
         isDataProvided = true;

@@ -111,9 +111,6 @@ exports.requestParking = function(req, resp, reqBody) {
     if (data) {
       var sql = "INSERT INTO ParkingRequest(PersonnelID,ParkingSpaceID,ParkingRequestTime,Status) VALUES ";
       sql+= util.format("('%s', %d, '%s', %d)", data.PersonnelID, data.ParkingSpaceID, new Date().toISOString(), true);
-
-      console.log(date, sql);
-
       db.executeSql(sql, function(data, err) {
         if (err) {
           httpMsgs.show500(req, resp, err);
