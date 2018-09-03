@@ -47,7 +47,7 @@ exports.fetchLoginInfo = function(personelID, callback) {
 // gets user accociated to license plate
 exports.getUserByLPlate = function(req, resp, lPlate) {
   try {
-    db.executeSql("uspDisplayPersonelInfo" + date + lPlate, function(data, err) {
+    db.executeSql("uspGetPeronnelIdFromLicensePlate" + lPlate, function(data, err) {
       if (err) {
         httpMsgs.show500(req, resp, err);
       } else {

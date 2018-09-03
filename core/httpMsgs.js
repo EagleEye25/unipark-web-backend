@@ -75,7 +75,9 @@ exports.showHome = function(req, resp) {
   {url: "/request-parking", operation: "POST", description: "Request for parking within facility."},
   {url: "/infringements/'personnelID'", operation: "GET", description: "Gets all entered user infringements."},
   {url: "/personnel/requests/'personnelID'", operation: "GET", description: "Gets personnel Requests."},
-  {url: "/request/cancel/'personnelID'", operation: "GET", description: "Cancels Request. (UPDATED)"}
+  {url: "/request/cancel/'personnelID'", operation: "GET", description: "Cancels Request. (UPDATED)"},
+  {url: "/personnelByPlate/'licensePlate'", operation: "GET", description: "Gets user asocciated to license plate"},
+  {url: "/report", operation: "POST", description: "Reports a user"}
   ]));
   resp.end();
 };

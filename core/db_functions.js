@@ -146,7 +146,7 @@ getUserByLPlate = function(req, resp) {
     patt = new RegExp(regexLPlate);
     lPlate = patt.exec(req.url);
     lPlate = "'"+lPlate+"'";
-    lPlate = lPlate.substr(1);
+    lPlate = lPlate.replace('?','');
     console.log("LPLATE: " + lPlate);
     personel.getUserByLPlate(req, resp, lPlate);
   } else {
